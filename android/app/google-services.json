@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "871826761509",
+    "project_id": "havypran-note",
+    "storage_bucket": "havypran-note.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871826761509:android:c5acccba6015b6dd6e1ccc",
+        "android_client_info": {
+          "package_name": "com.navillela.practice_firebase_note"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "871826761509-q3114bmjkqo46nsv231f52os1g5cqr0p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCijiMI0UFBTWvI_pHEW8cMUrQsYLgeRxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "871826761509-q3114bmjkqo46nsv231f52os1g5cqr0p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
