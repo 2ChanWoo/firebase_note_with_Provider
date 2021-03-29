@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice_firebase_note/pages/signin_page.dart';
+import 'package:practice_firebase_note/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
   static const String routeName = 'signup-page';
@@ -19,7 +21,7 @@ class _SignupPageState extends State<SignupPage> {
 
   String _name, _email, _password;
 
-  void _submit() {
+  void _submit() async {
     setState( () {
       autovalidateMode = AutovalidateMode.always;
     });
@@ -29,6 +31,15 @@ class _SignupPageState extends State<SignupPage> {
     _fkey.currentState.save();
 
     print('name: $_name, email: $_email, password: $_password');
+
+    try{
+      await context
+          .read<AuthProvider>() //context.read 는 provider.of 에서 listen:false 와 비슷한 것!
+          .signUp(context, name: _name, email: _email, password: _password);
+
+    }catch (e) {
+      print(e); //autn_provider에서 rethrow를 해서 여기서 또 받을 수 있다라는거?
+    }
   }
 
   @override
@@ -110,7 +121,7 @@ class _SignupPageState extends State<SignupPage> {
                         ),
                         //벨리데이터 라는 패키지나 레귤러 익스프레셔? 로 정교하게 설장할 수 있다?!
                         validator: (String val) {
-                          if (val.trim().length < 1) {
+                          if (val.trim().length < 6) {
                             return 'Password must be at least 1 long';
                           }
                           return null;

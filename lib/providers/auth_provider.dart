@@ -26,7 +26,7 @@ class AuthProvider extends ChangeNotifier {
 
   AuthProgressState state = AuthProgressState(loading: false);
 
-  Future<void> signUp({String name, String email, String password}) async {
+  Future<void> signUp(BuildContext context, {String name, String email, String password}) async {
     state = state.copyWIth(loading: true);
     notifyListeners();
 
@@ -41,6 +41,7 @@ class AuthProvider extends ChangeNotifier {
       });
       state =state.copyWIth(loading: false);
       notifyListeners();
+      Navigator.pop(context);
     }catch (e) {
       state = state.copyWIth(loading: false);
       notifyListeners();
