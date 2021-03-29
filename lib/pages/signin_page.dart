@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice_firebase_note/pages/signup_page.dart';
+import 'package:practice_firebase_note/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class SigninPage extends StatefulWidget {
   static const String routeName = 'signin-page';
@@ -17,7 +19,7 @@ class _SigninPageState extends State<SigninPage> {
 
   String _email, _password;
 
-  void _submit() {
+  void _submit() async {
     setState(() {
       autovalidateMode = AutovalidateMode.always;
     });
@@ -27,6 +29,13 @@ class _SigninPageState extends State<SigninPage> {
     _fkey.currentState.save();
 
     print('email: $_email, password: $_password');
+
+    try {
+      await context.read<AuthProvider>()
+          .signIn(email: _email, password: _password);
+    } catch (e) {
+      print(e); //autn_provider에서 rethrow를 해서 여기서 또 받을 수 있다라는거?
+    }
   }
 
   @override
