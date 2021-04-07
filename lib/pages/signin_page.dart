@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice_firebase_note/pages/signup_page.dart';
 import 'package:practice_firebase_note/providers/auth_provider.dart';
+import 'package:practice_firebase_note/widgets/error_dialog.dart';
 import 'package:provider/provider.dart';
 
 class SigninPage extends StatefulWidget {
@@ -31,15 +32,20 @@ class _SigninPageState extends State<SigninPage> {
     print('email: $_email, password: $_password');
 
     try {
-      await context.read<AuthProvider>()
+      await context
+          .read<AuthProvider>()
           .signIn(email: _email, password: _password);
     } catch (e) {
       print(e); //autn_provider에서 rethrow를 해서 여기서 또 받을 수 있다라는거?
+
+      errorDialog(context, e);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final authState = context.watch<AuthProvider>().state;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -108,7 +114,7 @@ class _SigninPageState extends State<SigninPage> {
                       height: 20.0,
                     ),
                     ElevatedButton(
-                      onPressed: _submit,
+                      onPressed: authState.loading == true ? null : _submit,
                       child: Text(
                         'SIGN IN',
                         style: TextStyle(
@@ -120,9 +126,12 @@ class _SigninPageState extends State<SigninPage> {
                       height: 20.0,
                     ),
                     TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SignupPage.routeName);
-                      },
+                      onPressed: authState.loading == true
+                          ? null
+                          : () {
+                              Navigator.pushNamed(
+                                  context, SignupPage.routeName);
+                            },
                       child: Text(
                         'GO SIGN UP',
                         style: TextStyle(

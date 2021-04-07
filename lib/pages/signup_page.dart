@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice_firebase_note/pages/signin_page.dart';
 import 'package:practice_firebase_note/providers/auth_provider.dart';
+import 'package:practice_firebase_note/widgets/error_dialog.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
@@ -39,11 +40,15 @@ class _SignupPageState extends State<SignupPage> {
 
     }catch (e) {
       print(e); //autn_provider에서 rethrow를 해서 여기서 또 받을 수 있다라는거?
+
+      errorDialog(context, e);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final authState = context.watch<AuthProvider>().state;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -153,7 +158,7 @@ class _SignupPageState extends State<SignupPage> {
                       height: 20.0,
                     ),
                     ElevatedButton(
-                      onPressed: _submit,
+                      onPressed: authState == true ? null : _submit,
                       child: Text(
                         'SIGN UP',
                         style: TextStyle(
@@ -165,7 +170,7 @@ class _SignupPageState extends State<SignupPage> {
                       height: 20.0,
                     ),
                     TextButton(
-                      onPressed: () {
+                      onPressed: authState == true ? null : () {
                         Navigator.pop(context);
                       },
                       child: Text(

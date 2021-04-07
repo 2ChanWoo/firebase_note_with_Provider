@@ -18,13 +18,15 @@ class User extends Equatable {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      id: id,
-      name: name,
-      email: email,
-    };
-  }
+//  Map<String, dynamic> toJson() {
+//    return {
+//      id: id,
+//      name: name,
+//      email: email,
+//    };
+//  }
+  @override
+  bool get stringify => true;     //프린트 할 때 보기 편하게 나오게 하기 위한.
 
   @override
   List<Object> get props =>

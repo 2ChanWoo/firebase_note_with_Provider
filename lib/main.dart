@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
 import 'package:flutter/material.dart';
-import 'package:practice_firebase_note/pages/note_page.dart';
+import 'package:practice_firebase_note/pages/home_page.dart';
+import 'package:practice_firebase_note/pages/notes_page.dart';
 import 'package:practice_firebase_note/pages/signin_page.dart';
 import 'package:practice_firebase_note/pages/signup_page.dart';
 import 'package:practice_firebase_note/providers/auth_provider.dart';
+import 'package:practice_firebase_note/providers/note_provider.dart';
+import 'package:practice_firebase_note/providers/profile_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -17,7 +20,7 @@ class MyApp extends StatelessWidget {
 
   Widget IsAuthenticated(BuildContext context) {
     if(context.watch<firebaseAuth.User>() != null)
-      return NotesPage();
+      return HomePage();
     return SigninPage();
   }
 
@@ -30,6 +33,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(
           create: (context) => AuthProvider(),
         ),
+        ChangeNotifierProvider<NoteList>(
+          create: (context) => NoteList(),
+        ),
+        ChangeNotifierProvider<ProfileProvider>(create: (context) => ProfileProvider(),),
       ],
       child: MaterialApp(
           title: 'Note',
