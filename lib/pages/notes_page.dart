@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:practice_firebase_note/pages/add_edit_note_page.dart';
 import 'package:practice_firebase_note/pages/search_page.dart';
 import 'package:practice_firebase_note/providers/auth_provider.dart';
@@ -107,8 +108,10 @@ class _NotesPageState extends State<NotesPage> {
                 note.title,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
-              subtitle: Text(note.timestamp.toDate().toIso8601String()),
-            ),
+              subtitle: Text(
+                DateFormat('yyyy-MM-dd, hh:mm:ss')
+                    .format(note.timestamp.toDate()),
+              ),            ),
           ),
         );
       },

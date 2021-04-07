@@ -70,15 +70,18 @@ class NoteList extends ChangeNotifier {
       String searchTerm,
       ) async {
     try {
+      print('search >>>>> $searchTerm');
       final snapshotOne = notesRef
           .doc(userId)
           .collection('userNotes')
-          .where('title', isGreaterThanOrEqualTo: searchTerm);
+          .where('title', isGreaterThanOrEqualTo: searchTerm)
+          .where('title', isLessThanOrEqualTo: searchTerm + 'z');
 
       final snapshotTwo = notesRef
           .doc(userId)
           .collection('userNotes')
-          .where('desc', isGreaterThanOrEqualTo: searchTerm);
+          .where('desc', isGreaterThanOrEqualTo: searchTerm)
+          .where('desc', isLessThanOrEqualTo: searchTerm + 'z');
 
       final userNotesSnapshot =
       await Future.wait([snapshotOne.get(), snapshotTwo.get()]);
